@@ -25,49 +25,30 @@ char blocks[6] = { 'T', 'B','L', 'I', 'S', 'Z'};
 class Tetromino
 {
 private:
-	char shape = 'T';
+	char shape;
 	float x = 1.0f;
 	float y = 1.0f;
 	float z = 1.0f;
+	float gravity = -1.0f;
 	float width = 1.0f;
 	float height = 1.0f;
 	float length = 1.0f;
+	int tetromino_speed = 1;
+	float time_elapsed = 0;
 
-	struct block_1 {
+	struct block {
 		float x;
 		float y;
 		float z;
 		int position;
-	} block_1;
+		string type;
+	} block_1, block_2, block_3, block_4;
 
-	struct block_2 {
-		float x;
-		float y;
-		float z;
-		int position;
-	} block_2;
+	float across_position[4][3] = { {0.0f, 1.0f, -1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, -1.0f, 1.0f}, {0.0f, -1.0f, -1.0f} };
+	// float across_2_position[4][3] = { {0.0f, 2.0f, 0.0f}, {0.0f, 0.0f, 2.0f}, {0.0f, -2.0f, 0.0f}, {0.0f, 0.0f, -2.0f} };
+	float diagonal_position[4][3] = { {0.0f, 2.0f, 0.0f}, {0.0f, 0.0f, 2.0f}, {0.0f, -2.0f, 0.0f}, {0.0f, 0.0f, -2.0f} };
 
-	struct block_3 {
-		float x;
-		float y;
-		float z;
-		int position;
-	} block_3;
 
-	struct block_4 {
-		float x;
-		float y;
-		float z;
-		int position;
-	} block_4;
-
-	float t_position[4][3] = { {0.0f, 1.0f, -1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, -1.0f, 1.0f}, {0.0f, -1.0f, -1.0f} };
-
-	float b_position[4][3] = { {0.0f, 1.0f, -1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, -1.0f, 1.0f}, {0.0f, -1.0f, -1.0f} };
-	float l_position[4][3] = { {0.0f, 1.0f, -1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, -1.0f, 1.0f}, {0.0f, -1.0f, -1.0f} };
-	float i_position[4][3] = { {0.0f, 1.0f, -1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, -1.0f, 1.0f}, {0.0f, -1.0f, -1.0f} };
-	float s_position[4][3] = { {0.0f, 1.0f, -1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, -1.0f, 1.0f}, {0.0f, -1.0f, -1.0f} };
-	float z_position[4][3] = { {0.0f, 1.0f, -1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, -1.0f, 1.0f}, {0.0f, -1.0f, -1.0f} };
 
 	Color flat_color = RED;
 	Color edge_color = MAROON;
@@ -77,9 +58,6 @@ public:
 
 	void Draw()
 	{
-		if (shape == 'T')
-		{
-
 			//  x
 			// 1xx
 			DrawCube({ block_1.x, block_1.y, block_1.z }, width, height, length, flat_color);
@@ -102,22 +80,36 @@ public:
 			DrawCubeWires({ block_4.x, block_4.y, block_4.z}, width, height, length, flat_color);
 
 
-		}
-
 
 	}
 
-	void Update()
+	void Update(float delta)
 	{
 
 		// Gravity
-		y = 1.0f;
+
+		// y = y - speed ;
+		// y += -1.0f;
 		/*
-		block_1.y += y;
-		block_2.y += y;
-		block_3.y += y;
-		block_4.y += y;
 		*/
+		time_elapsed += delta;
+		if (time_elapsed >= tetromino_speed)
+		{
+			time_elapsed = 0;
+
+			block_1.y += gravity;
+			block_2.y += gravity;
+			block_3.y += gravity;
+			block_4.y += gravity;
+		}
+
+		/*
+		cout << "--------------" << endl;
+		// cout << "delta: " << delta << endl;
+		cout << "time_elapsed: " << time_elapsed << endl;
+		cout << "y: " << y << endl;
+		*/
+		
 
 
 		// Collision
@@ -129,84 +121,128 @@ public:
 				{
 					cout << "block_1" << endl;
 					block_1.position = 0;
-					block_1.x += t_position[0][0];
-					block_1.y += t_position[0][1];
-					block_1.z += t_position[0][2];
+					block_1.x += across_position[0][0];
+					block_1.y += across_position[0][1];
+					block_1.z += across_position[0][2];
 				}
 				else
 				{
 					cout << "block_1" << endl;
 
 					block_1.position += 1;
-					block_1.x += t_position[block_1.position][0];
-					block_1.y += t_position[block_1.position][1];
-					block_1.z += t_position[block_1.position][2];
+					block_1.x += across_position[block_1.position][0];
+					block_1.y += across_position[block_1.position][1];
+					block_1.z += across_position[block_1.position][2];
 				}
 
 				if (block_3.position == 3)
 				{
 					block_3.position = 0;
-					block_3.x += t_position[0][0];
-					block_3.y += t_position[0][1];
-					block_3.z += t_position[0][2];
+					block_3.x += across_position[0][0];
+					block_3.y += across_position[0][1];
+					block_3.z += across_position[0][2];
 				}
 				else
 				{
 					block_3.position += 1;
-					block_3.x += t_position[block_3.position][0];
-					block_3.y += t_position[block_3.position][1];
-					block_3.z += t_position[block_3.position][2];
+					block_3.x += across_position[block_3.position][0];
+					block_3.y += across_position[block_3.position][1];
+					block_3.z += across_position[block_3.position][2];
 				}
 
 				if (block_4.position == 3)
 				{
 					block_4.position = 0;
-					block_4.x += t_position[0][0];
-					block_4.y += t_position[0][1];
-					block_4.z += t_position[0][2];
+					block_4.x += across_position[0][0];
+					block_4.y += across_position[0][1];
+					block_4.z += across_position[0][2];
 				}
 				else
 				{
 					block_4.position += 1;
-					block_4.x += t_position[block_4.position][0];
-					block_4.y += t_position[block_4.position][1];
-					block_4.z += t_position[block_4.position][2];
+					block_4.x += across_position[block_4.position][0];
+					block_4.y += across_position[block_4.position][1];
+					block_4.z += across_position[block_4.position][2];
 				}
 			}
 
 
+		}
+		if (IsKeyPressed(KEY_LEFT))
+		{
+			block_1.z -= 1; 
+			block_2.z -= 1; 
+			block_3.z -= 1; 
+			block_4.z -= 1; 
+		}
+		if (IsKeyPressed(KEY_RIGHT))
+		{
+			block_1.z += 1;
+			block_2.z += 1;
+			block_3.z += 1;
+			block_4.z += 1;
 		}
 
 	}
 
 	void InitializeTetromino(string blocks) {
 		int num = rand() % blocks.length();
-		char block = blocks[num];
+		// char block = blocks[num];
 
-		block = 'T';
+		shape = 'T';
 		//{ "T", "S", "L", "I", "S", "Z"}
-		switch (block){
+		switch (shape){
 			case 'T':
 				block_1.x = 0.0f;
 				block_1.y = 0.0f;
 				block_1.z = -1.0f;
 				block_1.position = 0;
+				block_1.type = "across";
 
 				block_2.x = 0.0f;
 				block_2.y = 0.0f;
 				block_2.z = 0.0f;
 				block_2.position = -1;
+				block_2.type = "across";
 
 				block_3.x = 0.0f;
 				block_3.y = 0.0f;
 				block_3.z = 1.0f;
 				block_3.position = 2;
+				block_3.type = "across";
 
 				block_4.x = 0.0f;
 				block_4.y = 1.0f;
 				block_4.z = 0.0f;
 				block_4.position = 1;
+				block_4.type = "across";
 				break;
+			case 'S':
+				block_1.x = 0.0f;
+				block_1.y = 0.0f;
+				block_1.z = -1.0f;
+				block_1.position = 0;
+				block_1.type = "across";
+
+				block_2.x = 0.0f;
+				block_2.y = 0.0f;
+				block_2.z = 0.0f;
+				block_2.position = -1;
+				block_2.type = "center";
+
+				block_3.x = 0.0f;
+				block_3.y = 1.0f;
+				block_3.z = 0.0f;
+				block_3.position = 2;
+				block_3.type = "across";
+
+				block_4.x = 0.0f;
+				block_4.y = 1.0f;
+				block_4.z = 1.0f;
+				block_4.position = 1;
+				block_4.type = "diagonal";
+				break;
+
 		}
 
 	}
@@ -232,10 +268,12 @@ int main(void)
 
 	float cube_size = 1.0f;
 
-	SetTargetFPS(1);
+	SetTargetFPS(60);
 
 	while(!WindowShouldClose())
 	{
+		float deltaTime = GetFrameTime();
+
 		BeginDrawing();
 
 		ClearBackground(RAYWHITE);
@@ -246,12 +284,13 @@ int main(void)
 		if (!tetromino.tetromino_exist)
 		{
 			tetromino.InitializeTetromino(blocks);
+			tetromino.tetromino_exist = true;
 
 		}
 
 		// Update
 
-		tetromino.Update();
+		tetromino.Update(deltaTime);
 
 		// Collision 
 		// Draw
