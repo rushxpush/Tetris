@@ -248,3 +248,10 @@ using namespace std;
 		}
 
 	}
+
+	void Tetromino::InitializePosition(int size_x, int size_y, int size_z)
+	{
+		x = size_x + x_displacement;
+		y = size_y;
+		z = int(size_z / 2);
+	}

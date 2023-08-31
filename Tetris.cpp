@@ -48,6 +48,7 @@ int main(void)
 
 	SetTargetFPS(60);
 	board.GenerateBoard();
+	tetromino.InitializePosition(board.size_x, board.size_y, board.size_z);
 
 	while(!WindowShouldClose())
 	{

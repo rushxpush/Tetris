@@ -7,7 +7,6 @@ using namespace std;
 
 void Board::Draw(float delta)
 {
-
 	// DrawCube({ x, y, z }, width, height, length, GRAY);
 	// DrawCubeWires({ x, y, z }, width, height, length, RED);
 
@@ -18,12 +17,6 @@ void Board::Draw(float delta)
 		DrawCube({ board[i][0], board[i][1], board[i][2] }, width, height, length, GRAY);
 		DrawCubeWires({ board[i][0], board[i][1], board[i][2] }, width, height, length, LIGHTGRAY);
 	}
-	
-
-
-
-
-
 };
 
 void Board::Update(float delta)

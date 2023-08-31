@@ -8,15 +8,26 @@ class Tetromino
 
 private:
 	char shape;
+	/*
 	float x = 1.0f;
 	float y = 20.0f;
 	float z = 1.0f;
-	float gravity = -1.0f;
+	*/
+	float x;
+	float y;
+	float z;
+
+	float x_displacement = 1.0f;
+
 	float width = 1.0f;
 	float height = 1.0f;
 	float length = 1.0f;
+
+	float gravity = -1.0f;
+
 	int tetromino_speed = 1;
 	float time_elapsed = 0;
+
 	bool key_down_pressed = false;
 	bool key_left_pressed = false;
 	bool key_right_pressed = false;
@@ -49,4 +60,6 @@ public:
 	void Update(float delta);
 
 	void InitializeTetromino(string blocks);
+
+	void InitializePosition(int x, int y, int z);
 };
