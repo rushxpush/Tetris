@@ -17,6 +17,12 @@ private:
 	float length = 1.0f;
 	int tetromino_speed = 1;
 	float time_elapsed = 0;
+	bool key_down_pressed = false;
+	bool key_left_pressed = false;
+	bool key_right_pressed = false;
+	float key_down_time_pressed = 0;
+	float key_left_time_pressed = 0;
+	float key_right_time_pressed = 0;
 
 	struct block {
 		float x;

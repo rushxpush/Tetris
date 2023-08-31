@@ -3,6 +3,7 @@
 #include <deque>
 #include <vector>
 #include "Tetromino.h"
+#include "Board.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ char blocks[6] = { 'T', 'B','L', 'I', 'S', 'Z'};
 
 
 Tetromino tetromino;
+Board board;
 
 
 int main(void)
@@ -31,7 +33,8 @@ int main(void)
 
 	// Camera
 	Camera3D camera = { 0 };
-	camera.position = { -20.0f, 10.0f, 2.0f };
+	// camera.position = { -40.0f, 10.0f, 2.0f };
+	camera.position = { -10.0f, 10.0f, 10.0f };
 	camera.target = { 0.0f, 0.0f, 0.0f };
 	camera.up = { 0.0f, 1.0f, 0.0f };
 	camera.fovy = 45.0f;
@@ -74,6 +77,7 @@ int main(void)
 		//if ()
 
 		tetromino.Draw();
+		board.Draw();
 
 		DrawGrid(10, 1.0f);
 

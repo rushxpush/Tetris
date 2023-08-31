@@ -40,14 +40,49 @@ using namespace std;
 		/*
 		*/
 		time_elapsed += delta;
-		if (time_elapsed >= tetromino_speed)
+		//key_down_time_pressed += delta;
+		if (key_down_pressed)
 		{
-			time_elapsed = 0;
+			if (time_elapsed >= tetromino_speed / 1) 
+			{
+				block_1.y += gravity;
+				block_2.y += gravity;
+				block_3.y += gravity;
+				block_4.y += gravity;
 
-			block_1.y += gravity;
-			block_2.y += gravity;
-			block_3.y += gravity;
-			block_4.y += gravity;
+				time_elapsed = 0.95;
+
+			}
+		}
+		else
+		{
+			if (time_elapsed >= tetromino_speed)
+			{
+
+				block_1.y += gravity;
+				block_2.y += gravity;
+				block_3.y += gravity;
+				block_4.y += gravity;
+
+				time_elapsed = 0;
+			}
+		}
+		if (key_left_pressed)
+		{
+
+			cout << "key_left_pressed" << endl;
+			if (time_elapsed >= tetromino_speed / 1) {
+				block_1.z += -1.0f;
+				block_2.z += -1.0f;
+				block_3.z += -1.0f;
+				block_4.z += -1.0f;
+
+				key_down_time_pressed = 0.95;
+			}
+		}
+		else
+		{
+
 		}
 
 		/*
@@ -121,6 +156,12 @@ using namespace std;
 			block_2.z -= 1;
 			block_3.z -= 1;
 			block_4.z -= 1;
+
+			key_left_pressed = true;
+		}
+		if (IsKeyReleased(KEY_LEFT))
+		{
+			key_down_pressed = false;
 		}
 		if (IsKeyPressed(KEY_RIGHT))
 		{
@@ -128,6 +169,20 @@ using namespace std;
 			block_2.z += 1;
 			block_3.z += 1;
 			block_4.z += 1;
+		}
+		if (IsKeyPressed(KEY_DOWN))
+		{
+			block_1.y -= 1;
+			block_2.y -= 1;
+			block_3.y -= 1;
+			block_4.y -= 1;
+			key_down_pressed = true;
+
+		}
+		if (IsKeyReleased(KEY_DOWN))
+		{
+			key_down_pressed = false;
+
 		}
 
 	}
