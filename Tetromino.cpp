@@ -3,7 +3,7 @@
 #include "Tetromino.h"
 using namespace std;
 
-	void Tetromino::Draw()
+	void Tetromino::Draw(float delta)
 	{
 		//  x
 		// 1xx
@@ -195,27 +195,27 @@ using namespace std;
 		//{ "T", "S", "L", "I", "S", "Z"}
 		switch (shape) {
 		case 'T':
-			block_1.x = 0.0f;
-			block_1.y = 0.0f;
-			block_1.z = -1.0f;
+			block_1.x = 0.0f + x;
+			block_1.y = 0.0f + y ;
+			block_1.z = -1.0f + z;
 			block_1.position = 0;
 			block_1.type = "across";
 
-			block_2.x = 0.0f;
-			block_2.y = 0.0f;
-			block_2.z = 0.0f;
+			block_2.x = 0.0f + x;
+			block_2.y = 0.0f + y;
+			block_2.z = 0.0f + z;
 			block_2.position = -1;
 			block_2.type = "across";
 
-			block_3.x = 0.0f;
-			block_3.y = 0.0f;
-			block_3.z = 1.0f;
+			block_3.x = 0.0f + x;
+			block_3.y = 0.0f + y;
+			block_3.z = 1.0f + z;
 			block_3.position = 2;
 			block_3.type = "across";
 
-			block_4.x = 0.0f;
-			block_4.y = 1.0f;
-			block_4.z = 0.0f;
+			block_4.x = 0.0f + x;
+			block_4.y = 1.0f + y;
+			block_4.z = 0.0f + z;
 			block_4.position = 1;
 			block_4.type = "across";
 			break;

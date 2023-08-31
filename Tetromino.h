@@ -9,7 +9,7 @@ class Tetromino
 private:
 	char shape;
 	float x = 1.0f;
-	float y = 1.0f;
+	float y = 20.0f;
 	float z = 1.0f;
 	float gravity = -1.0f;
 	float width = 1.0f;
@@ -44,7 +44,7 @@ private:
 public:
 	bool tetromino_exist = false;
 
-	void Draw();
+	void Draw(float delta);
 
 	void Update(float delta);
 

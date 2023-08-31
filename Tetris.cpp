@@ -9,6 +9,7 @@ using namespace std;
 
 int screen_width = 1280;
 int screen_height = 800;
+bool is_timestep_active = false;
 
 class BlocksColor
 {
@@ -34,17 +35,19 @@ int main(void)
 	// Camera
 	Camera3D camera = { 0 };
 	// camera.position = { -40.0f, 10.0f, 2.0f };
-	camera.position = { -10.0f, 10.0f, 10.0f };
+	camera.position = { -14.0f, 20.0f, 0.0f };
 	camera.target = { 0.0f, 0.0f, 0.0f };
 	camera.up = { 0.0f, 1.0f, 0.0f };
-	camera.fovy = 45.0f;
+	camera.fovy = 120.0f;
 	camera.projection = CAMERA_PERSPECTIVE;
+
 
 	Vector3 cubePosition = { 0.0f, 0.0f, 0.0f };
 
 	float cube_size = 1.0f;
 
 	SetTargetFPS(60);
+	board.GenerateBoard();
 
 	while(!WindowShouldClose())
 	{
@@ -64,6 +67,9 @@ int main(void)
 
 		}
 
+		if(is_timestep_active)
+		{ }
+
 		// Update
 
 		tetromino.Update(deltaTime);
@@ -76,10 +82,10 @@ int main(void)
 
 		//if ()
 
-		tetromino.Draw();
-		board.Draw();
+		tetromino.Draw(deltaTime);
+		board.Draw(deltaTime);
 
-		DrawGrid(10, 1.0f);
+		DrawGrid(100, 1.0f);
 
 		EndMode3D();
 
