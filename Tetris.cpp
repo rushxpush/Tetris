@@ -8,7 +8,7 @@
 using namespace std;
 
 int screen_width = 1280;
-int screen_height = 800;
+int screen_height = 900;
 bool is_timestep_active = false;
 
 class BlocksColor
@@ -32,14 +32,6 @@ int main(void)
 
 	InitWindow(screen_width, screen_height, "3d Tetris");
 
-	// Camera
-	Camera3D camera = { 0 };
-	// camera.position = { -40.0f, 10.0f, 2.0f };
-	camera.position = { -14.0f, 20.0f, 0.0f };
-	camera.target = { 0.0f, 0.0f, 0.0f };
-	camera.up = { 0.0f, 1.0f, 0.0f };
-	camera.fovy = 120.0f;
-	camera.projection = CAMERA_PERSPECTIVE;
 
 
 	Vector3 cubePosition = { 0.0f, 0.0f, 0.0f };
@@ -49,6 +41,16 @@ int main(void)
 	SetTargetFPS(60);
 	board.GenerateBoard();
 	tetromino.InitializePosition(board.size_x, board.size_y, board.size_z);
+
+	// Camera
+	Camera3D camera = { 0 };
+	// camera.position = { -40.0f, 10.0f, 2.0f };
+	camera.position = { -30.0f, 10.0f , 5.0f };
+	// camera.target = { 8.0f, 8.0f, 8.0f };
+	camera.target = { float(board.size_x) / 2, float(board.size_y) / 2, float(board.size_z) / 2};
+	camera.up = { 0.0f, 1.0f, 0.0f };
+	camera.fovy = 45.0f;
+	camera.projection = CAMERA_PERSPECTIVE;
 
 	while(!WindowShouldClose())
 	{
