@@ -36,7 +36,12 @@ int main(void)
 
 	Vector3 cubePosition = { 0.0f, 0.0f, 0.0f };
 
+
 	float cube_size = 1.0f;
+
+	
+	BoundingBox box;
+
 
 	SetTargetFPS(60);
 	board.GenerateBoard();

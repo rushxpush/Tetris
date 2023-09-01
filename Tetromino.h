@@ -41,6 +41,7 @@ private:
 		float z;
 		int position;
 		string type;
+
 	} block_1, block_2, block_3, block_4;
 
 	float across_position[4][3] = { {0.0f, 1.0f, -1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, -1.0f, 1.0f}, {0.0f, -1.0f, -1.0f} };
@@ -56,6 +57,8 @@ public:
 	bool tetromino_exist = false;
 
 	void Draw(float delta);
+
+	void Collision();
 
 	void Update(float delta);
 

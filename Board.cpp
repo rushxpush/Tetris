@@ -16,17 +16,17 @@ void Board::Draw(float delta)
 
 		if (board[i][1] == 0 || board[i][1] == size_y - 1)
 		{
-			DrawCube({ board[i][0], board[i][1], board[i][2] }, wall_width, height, length, BLUE);
-			DrawCubeWires({ board[i][0], board[i][1], board[i][2] }, wall_width, height, length, LIGHTGRAY);
+			DrawCube({ board[i][0], board[i][1], board[i][2] }, block_width, block_height, block_length, BLUE);
+			DrawCubeWires({ board[i][0], board[i][1], board[i][2] }, block_width, block_height, block_length, LIGHTGRAY);
 		}
 		else if (board[i][2] == 0 || board[i][2] == size_z - 1)
 		{
-			DrawCube({ board[i][0], board[i][1], board[i][2] }, wall_width, height, length, RED);
-			DrawCubeWires({ board[i][0], board[i][1], board[i][2] }, wall_width, height, length, LIGHTGRAY);
+			DrawCube({ board[i][0], board[i][1], board[i][2] }, block_width, block_height, block_length, RED);
+			DrawCubeWires({ board[i][0], board[i][1], board[i][2] }, block_width, block_height, block_length, LIGHTGRAY);
 		}
 		else {
-			DrawCube({ board[i][0], board[i][1], board[i][2] }, width, height, length, GRAY);
-			DrawCubeWires({ board[i][0], board[i][1], board[i][2] }, width, height, length, LIGHTGRAY);
+			DrawCube({ board[i][0], board[i][1], board[i][2] }, panel_width, panel_height, panel_length, GRAY);
+			DrawCubeWires({ board[i][0], board[i][1], board[i][2] }, panel_width, panel_height, panel_length, LIGHTGRAY);
 
 		}
 	}
@@ -49,7 +49,7 @@ void Board::GenerateBoard()
 		
 		vector<float> v1d;
 			// push x
-			v1d.push_back(x);
+			v1d.push_back(initial_pos_x);
 			// push y
 			v1d.push_back(pos_y);
 			// push z
@@ -72,3 +72,40 @@ void Board::GenerateBoard()
 
 
 };
+
+void Board::AddCollisionBoxes()
+{
+
+
+	left_wall_bounding_box.min.x = initial_pos_x;
+	left_wall_bounding_box.min.y = initial_pos_y;
+	left_wall_bounding_box.min.z = initial_pos_z;
+
+	/*
+	left_wall_bounding_box.max.x = ;
+	left_wall_bounding_box.max.y = ;
+	left_wall_bounding_box.max.z = ;
+	*/
+
+	// left_wall_bounding_box.max.x = board[size_z - 1][0] + ;
+	// left_wall_bounding_box.max.y = board[size_z - 1][1] + ;
+	// left_wall_bounding_box.max.z = board[size_z - 1][2] + ;
+
+	// right_wall_bounding_box.min.x = board[size_x]
+
+	for (int i = 0; i < board.size(); i++)
+	{
+		//cout << 'i: ' << i << endl;
+
+		if (board[i][1] == 0 || board[i][1] == size_y - 1)
+		{
+			
+			// DrawCube({ board[i][0], board[i][1], board[i][2] }, block_width, height, length, BLUE);
+		}
+		else if (board[i][2] == 0 || board[i][2] == size_z - 1)
+		{
+			// DrawCube({ board[i][0], board[i][1], board[i][2] }, block_width, height, length, RED);
+		}
+	}
+
+}

@@ -30,6 +30,12 @@ using namespace std;
 
 	}
 
+	void Tetromino::Collision()
+	{
+		//CheckCollisionBoxes()
+
+	}
+
 	void Tetromino::Update(float delta)
 	{
 
@@ -94,7 +100,7 @@ using namespace std;
 
 
 
-		// Collision
+		// Movement 
 		if (IsKeyPressed(KEY_UP))
 		{
 			if (shape == 'T')

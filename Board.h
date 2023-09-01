@@ -7,15 +7,24 @@ using namespace std;
 class Board
 {
 private:
-	// Board individual block size
-	float width = 0.2f;
-	float height = 1.0f;
-	float length = 1.0f;
 
-	float wall_width = 1.0f;
-	float x = 1.0f;
-	float y = 0.0f;
-	float z = 0.0f;
+	// Panel Size
+	// float panel_width = 0.2f;
+	// Board individual block size
+	// float block_width = 1.0f;
+
+	// Board individual block size
+	float panel_width = 0.2f;
+	float panel_height = 1.0f;
+	float panel_length = 1.0f;
+
+	float block_width = 1.0f;
+	float block_height = 1.0f;
+	float block_length = 1.0f;
+
+	float initial_pos_x = 1.0f;
+	float initial_pos_y = 0.0f;
+	float initial_pos_z = 0.0f;
 
 	// vector<vector<vector<float>>> board;
 	
@@ -23,15 +32,21 @@ private:
 	vector<float> ::iterator it;
 	// string color_flat = BLACK;
 
+	BoundingBox left_wall_bounding_box;
+	BoundingBox right_wall_bounding_box;
+	BoundingBox floor_bounding_box;
+
+
 public:
 	// Board size
-	int ceiling = 2;
-	int floor = 2;
+	int ceiling_floor = 2;
+	int wall_wall = 2;
 	int size_x = 0;
-	int size_y = 20 + ceiling; 
-	int size_z = 10 + floor;  
+	int size_y = 20 + ceiling_floor; 
+	int size_z = 10 + wall_wall;  
 	void Draw(float delta);
 	void Update(float delta);
 	void GenerateBoard();
+	void AddCollisionBoxes();
 };
 
