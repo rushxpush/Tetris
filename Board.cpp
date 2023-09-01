@@ -76,22 +76,32 @@ void Board::GenerateBoard()
 void Board::AddCollisionBoxes()
 {
 
+	// Left wall collision
+	left_wall_bounding_box.min.x = initial_pos_x + 0 * block_width;
+	left_wall_bounding_box.min.y = initial_pos_y + 0 * block_height;
+	left_wall_bounding_box.min.z = initial_pos_z + 0 * block_length;
 
-	left_wall_bounding_box.min.x = initial_pos_x;
-	left_wall_bounding_box.min.y = initial_pos_y;
-	left_wall_bounding_box.min.z = initial_pos_z;
+	left_wall_bounding_box.max.x = initial_pos_x + 0 * block_width;
+	left_wall_bounding_box.max.y = initial_pos_y + (size_y - 1) * block_height;
+	left_wall_bounding_box.max.z = initial_pos_z + 1 * block_length;
 
-	/*
-	left_wall_bounding_box.max.x = ;
-	left_wall_bounding_box.max.y = ;
-	left_wall_bounding_box.max.z = ;
-	*/
+	// Right wall collision
+	right_wall_bounding_box.min.x = initial_pos_x + 0 * block_width;
+	right_wall_bounding_box.min.y = initial_pos_y + 0 * block_height;
+	right_wall_bounding_box.min.z = initial_pos_z + (size_z - 1) * block_length; 
 
-	// left_wall_bounding_box.max.x = board[size_z - 1][0] + ;
-	// left_wall_bounding_box.max.y = board[size_z - 1][1] + ;
-	// left_wall_bounding_box.max.z = board[size_z - 1][2] + ;
+	right_wall_bounding_box.max.x = initial_pos_x + 0 * block_width;
+	right_wall_bounding_box.max.y = initial_pos_y + (size_y - 1) * block_height;
+	right_wall_bounding_box.max.z = initial_pos_z + size_z * block_length;
 
-	// right_wall_bounding_box.min.x = board[size_x]
+	// Floor collision
+	floor_bounding_box.min.x = initial_pos_x + 0 * block_width;
+	floor_bounding_box.min.y = initial_pos_y + (size_y - 1) * block_height;
+	floor_bounding_box.min.z = initial_pos_z + (0 + 1) * block_length; 
+
+	floor_bounding_box.max.x = initial_pos_x + 0 * block_width;
+	floor_bounding_box.max.y = initial_pos_y + size_y * block_height;
+	floor_bounding_box.max.z = initial_pos_z + (size_z - 1) * block_length;
 
 	for (int i = 0; i < board.size(); i++)
 	{

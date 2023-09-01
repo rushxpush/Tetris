@@ -45,6 +45,7 @@ int main(void)
 
 	SetTargetFPS(60);
 	board.GenerateBoard();
+	board.AddCollisionBoxes();
 	tetromino.InitializePosition(board.size_x, board.size_y, board.size_z);
 
 	// Camera

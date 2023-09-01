@@ -39,6 +39,7 @@ private:
 		float x;
 		float y;
 		float z;
+		BoundingBox collision_box;
 		int position;
 		string type;
 
@@ -62,7 +63,10 @@ public:
 
 	void Update(float delta);
 
+	void UpdateCollisionBox(block &block);
+
 	void InitializeTetromino(string blocks);
 
 	void InitializePosition(int x, int y, int z);
+
 };
