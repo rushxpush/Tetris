@@ -32,12 +32,14 @@ private:
 	vector<float> ::iterator it;
 	// string color_flat = BLACK;
 
-	BoundingBox left_wall_bounding_box;
-	BoundingBox right_wall_bounding_box;
-	BoundingBox floor_bounding_box;
 
 
 public:
+
+	BoundingBox left_wall_bounding_box;
+	BoundingBox right_wall_bounding_box;
+	BoundingBox floor_bounding_box;
+	vector<BoundingBox> collision_box_vector = { left_wall_bounding_box, right_wall_bounding_box, floor_bounding_box };
 	// Board size
 	int ceiling_floor = 2;
 	int wall_wall = 2;

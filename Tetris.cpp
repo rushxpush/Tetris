@@ -46,7 +46,8 @@ int main(void)
 	SetTargetFPS(60);
 	board.GenerateBoard();
 	board.AddCollisionBoxes();
-	tetromino.InitializePosition(board.size_x, board.size_y, board.size_z);
+	tetromino.InitializePosition(board.size_x, board.size_y-1, board.size_z);
+	vector<BoundingBox> collisionBoxesVector = {board.left_wall_bounding_box, board.right_wall_bounding_box, board.floor_bounding_box};
 
 	// Camera
 	Camera3D camera = { 0 };
@@ -80,8 +81,7 @@ int main(void)
 		{ }
 
 		// Update
-
-		tetromino.Update(deltaTime);
+		tetromino.Update(deltaTime, board.left_wall_bounding_box);
 
 		// Collision 
 		// Draw
@@ -94,7 +94,7 @@ int main(void)
 		tetromino.Draw(deltaTime);
 		board.Draw(deltaTime);
 
-		DrawGrid(100, 1.0f);
+		DrawGrid(100, 0.5f);
 
 		EndMode3D();
 

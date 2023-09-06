@@ -1,6 +1,7 @@
 #include <iostream>
 #include <raylib.h>
 #include "Tetromino.h"
+#include <vector>
 using namespace std;
 
 void Tetromino::Draw(float delta)
@@ -30,13 +31,71 @@ void Tetromino::Draw(float delta)
 
 }
 
-void Tetromino::Collision()
+bool Tetromino::CheckCollision(BoundingBox col_box_1, BoundingBox col_box_2, float pos_x, float pos_y, float pos_z)
 {
-	//CheckCollisionBoxes()
+	BoundingBox future_col_box = col_box_1;
+	future_col_box.min.x += pos_x;
+	future_col_box.min.y += pos_y;
+	future_col_box.min.z += pos_z;
+
+	future_col_box.max.x += pos_x;
+	future_col_box.max.y += pos_y;
+	future_col_box.max.z += pos_z;
+
+	if (
+		future_col_box.min.x == col_box_2.min.x &&
+		future_col_box.min.y >= col_box_2.min.y &&
+		future_col_box.min.z == col_box_2.min.z &&
+		future_col_box.max.x == col_box_2.max.x &&
+		future_col_box.max.y <= col_box_2.max.y &&
+		future_col_box.max.z == col_box_2.max.z
+		)
+	{
+		cout << "My COLLISION" << endl;
+		return true;
+	}
+
+	/*
+	if (CheckCollisionBoxes(future_col_box, col_box_2))
+	{
+			return true;
+	}
+	*/
+	else
+	{
+		return false;
+	}
 
 }
 
-void Tetromino::Update(float delta)
+void Tetromino::RotateBlock(block& block, int position, string configuration)
+{
+	if (configuration == "across")
+	{
+
+		if (block.position == 3)
+		{
+			block.position = 0;
+			block.x += across_position[0][0];
+			block.y += across_position[0][1];
+			block.z += across_position[0][2];
+		}
+		else
+		{
+
+			block.position += 1;
+			block.x += across_position[block.position][0];
+			block.y += across_position[block.position][1];
+			block.z += across_position[block.position][2];
+		}
+	}
+	else {
+
+	}
+}
+
+// void Tetromino::Update(float delta, vector<BoundingBox> collision_boxes)
+void Tetromino::Update(float delta, BoundingBox collision_boxes)
 {
 
 	// Gravity
@@ -56,6 +115,12 @@ void Tetromino::Update(float delta)
 			block_3.y += gravity;
 			block_4.y += gravity;
 
+			UpdateCollisionBox(block_1);
+			UpdateCollisionBox(block_2);
+			UpdateCollisionBox(block_3);
+			UpdateCollisionBox(block_4);
+
+
 			time_elapsed = 0.95;
 
 		}
@@ -70,19 +135,34 @@ void Tetromino::Update(float delta)
 			block_3.y += gravity;
 			block_4.y += gravity;
 
+			UpdateCollisionBox(block_1);
+			UpdateCollisionBox(block_2);
+			UpdateCollisionBox(block_3);
+			UpdateCollisionBox(block_4);
+
 			time_elapsed = 0;
 		}
 	}
 	if (key_left_pressed)
 	{
 
-		cout << "key_left_pressed" << endl;
+		//cout << "key_left_pressed" << endl;
 		if (time_elapsed >= tetromino_speed / 1) {
-			block_1.z += -1.0f;
-			block_2.z += -1.0f;
-			block_3.z += -1.0f;
-			block_4.z += -1.0f;
+			cout << "works " << endl;
 
+
+			/*
+			block_1.z += -player_step;
+			block_2.z += -player_step;
+			block_3.z += -player_step;
+			block_4.z += -player_step;
+
+			UpdateCollisionBox(block_1);
+			UpdateCollisionBox(block_2);
+			UpdateCollisionBox(block_3);
+			UpdateCollisionBox(block_4);
+
+			*/
 			key_down_time_pressed = 0.95;
 		}
 	}
@@ -105,66 +185,101 @@ void Tetromino::Update(float delta)
 	{
 		if (shape == 'T')
 		{
-			if (block_1.position == 3)
-			{
-				cout << "block_1" << endl;
-				block_1.position = 0;
-				block_1.x += across_position[0][0];
-				block_1.y += across_position[0][1];
-				block_1.z += across_position[0][2];
-
-			}
-			else
-			{
-				cout << "block_1" << endl;
-
-				block_1.position += 1;
-				block_1.x += across_position[block_1.position][0];
-				block_1.y += across_position[block_1.position][1];
-				block_1.z += across_position[block_1.position][2];
-
-			
-			}
 
 			if (block_3.position == 3)
 			{
-				block_3.position = 0;
-				block_3.x += across_position[0][0];
-				block_3.y += across_position[0][1];
-				block_3.z += across_position[0][2];
+				if (!CheckCollision(block_3.collision_box, collision_boxes, 0, 0, across_position[0][2]))
+				{
+				}
+				else
+				{
+					collision_flag = true;
+
+				}
+			}
+		}
+
+		if (!collision_flag)
+		{
+			if (block_1.position == 3)
+			{
+				RotateBlock(block_1, 0, "across");
 			}
 			else
 			{
-				block_3.position += 1;
-				block_3.x += across_position[block_3.position][0];
-				block_3.y += across_position[block_3.position][1];
-				block_3.z += across_position[block_3.position][2];
+				RotateBlock(block_1, block_1.position + 1, "across");
+			}
+
+			if (block_3.position == 3)
+			{ 
+				RotateBlock(block_3, 0, "across");
+			}
+			else
+			{
+				RotateBlock(block_3, block_3.position + 1, "across");
 			}
 
 			if (block_4.position == 3)
 			{
-				block_4.position = 0;
-				block_4.x += across_position[0][0];
-				block_4.y += across_position[0][1];
-				block_4.z += across_position[0][2];
+				RotateBlock(block_4, 0, "across");
 			}
 			else
 			{
-				block_4.position += 1;
-				block_4.x += across_position[block_4.position][0];
-				block_4.y += across_position[block_4.position][1];
-				block_4.z += across_position[block_4.position][2];
+				RotateBlock(block_4, block_4.position + 1, "across");
 			}
+
+			UpdateCollisionBox(block_1);
+			UpdateCollisionBox(block_2);
+			UpdateCollisionBox(block_3);
+			UpdateCollisionBox(block_4);
+		}
+		// There is still a Bug that happens when you press left and up in rapid succession
+		// The tetromino doesn't go to the right apparently and causes a collision with block 3
+		// It should just move to the right and then cause a collision
+		else
+		{
+			cout << "COLLISION HAPPENS!" << endl;
+			collision_flag = false;
 		}
 
 
 	}
 	if (IsKeyPressed(KEY_LEFT))
 	{
-		block_1.z -= 1;
-		block_2.z -= 1;
-		block_3.z -= 1;
-		block_4.z -= 1;
+
+		// Inefficient. Think later of a better way
+		if (CheckCollision(block_1.collision_box, collision_boxes, 0, 0, -player_step))
+		{
+			cout << "COLLIDED 1!" << endl;
+		}
+		else if (CheckCollision(block_2.collision_box, collision_boxes, 0, 0, -player_step))
+		{
+			cout << "COLLIDED 2!" << endl;
+		}
+		else if (CheckCollision(block_3.collision_box, collision_boxes, 0, 0, -player_step))
+		{
+			cout << "COLLIDED 3!" << endl;
+		}
+		else if (CheckCollision(block_4.collision_box, collision_boxes, 0, 0, -player_step))
+		{
+			cout << "COLLIDED 4!" << endl;
+		}
+		else
+		{
+			block_1.z -= 1;
+			block_2.z -= 1;
+			block_3.z -= 1;
+			block_4.z -= 1;
+			UpdateCollisionBox(block_1);
+			UpdateCollisionBox(block_2);
+			UpdateCollisionBox(block_3);
+			UpdateCollisionBox(block_4);
+
+		}
+
+
+
+
 
 		key_left_pressed = true;
 	}
@@ -196,16 +311,16 @@ void Tetromino::Update(float delta)
 
 }
 
-void Tetromino::UpdateCollisionBox(block &block)
+void Tetromino::UpdateCollisionBox(block& block)
 {
 
-	block.collision_box.min.x = block_1.x;
-	block.collision_box.min.y = block_1.y;
-	block.collision_box.min.z = block_1.z;
+	block.collision_box.min.x = block.x;
+	block.collision_box.min.y = block.y;
+	block.collision_box.min.z = block.z;
 
-	block.collision_box.max.x = block_1.x + width;
-	block.collision_box.max.y = block_1.y + height;
-	block.collision_box.max.z = block_1.z + length;
+	block.collision_box.max.x = block.x + width;
+	block.collision_box.max.y = block.y + height;
+	block.collision_box.max.z = block.z + length;
 }
 
 
