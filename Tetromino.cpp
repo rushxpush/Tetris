@@ -233,9 +233,6 @@ void Tetromino::Update(float delta, BoundingBox collision_boxes)
 			UpdateCollisionBox(block_3);
 			UpdateCollisionBox(block_4);
 		}
-		// There is still a Bug that happens when you press left and up in rapid succession
-		// The tetromino doesn't go to the right apparently and causes a collision with block 3
-		// It should just move to the right and then cause a collision
 		else
 		{
 			cout << "COLLISION HAPPENS!" << endl;
@@ -293,6 +290,11 @@ void Tetromino::Update(float delta, BoundingBox collision_boxes)
 		block_2.z += 1;
 		block_3.z += 1;
 		block_4.z += 1;
+
+		UpdateCollisionBox(block_1);
+		UpdateCollisionBox(block_2);
+		UpdateCollisionBox(block_3);
+		UpdateCollisionBox(block_4);
 	}
 	if (IsKeyPressed(KEY_DOWN))
 	{

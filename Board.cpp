@@ -13,8 +13,10 @@ void Board::Draw(float delta)
 	for (int i = 0; i < board.size(); i++)
 	{
 		//cout << 'i: ' << i << endl;
-		// DrawCube({ left_wall_bounding_box.min.x, left_wall_bounding_box.min.y, left_wall_bounding_box.min.z}, left_wall_bounding_box.max.x, left_wall_bounding_box.max.y, left_wall_bounding_box.max.z, PINK);
-		DrawCube({ left_wall_bounding_box.min.x, 10.5, 0}, 1, 22, 1, PINK);
+		//DrawCube({ left_wall_bounding_box.min.x, left_wall_bounding_box.min.y, left_wall_bounding_box.min.z}, left_wall_bounding_box.max.x, left_wall_bounding_box.max.y, left_wall_bounding_box.max.z, PINK);
+		// DrawCube({ left_wall_bounding_box.min.x, 10.5, 0}, 1, 22, 1, PINK);
+		// DrawCube({ left_wall_bounding_box.min.x, 10.5, 0}, 1, 22, 1, PINK);
+		DrawLine3D({ 0,0,0 }, { 5,5,5 }, RED);
 
 		if (board[i][1] == 0 || board[i][1] == size_y - 1)
 		{
